@@ -31,16 +31,13 @@ class Cart
   # ## 要件
   #   - カートの中身（Cart#items）のすべてのアイテムの購入金額が、カートのオーナーのウォレットからアイテムのオーナーのウォレットに移されること。
     
-    # customer側
-    # self.owner.wallet.balance -= self.owner.cart.total_amount
-    self.owner.wallet.payment(self.owner.cart.total_amount)
 
+    self.items.each do |item|
+      self.owner.wallet.payment(item.price)
+      item.owner.wallet.receive(item.price)      
+    end
 
-    # seller側
-    # items[0].owner.wallet.balance += self.owner.cart.total_amount
-    items[0].owner.wallet.receive(self.owner.cart.total_amount)
-
-    binding.irb
+    # binding.irb
 
 
   #   - カートの中身（Cart#items）のすべてのアイテムのオーナー権限が、カートのオーナーに移されること。

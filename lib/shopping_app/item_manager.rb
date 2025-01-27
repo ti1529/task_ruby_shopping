@@ -1,9 +1,12 @@
 # モジュールの役割について確認したい場合は[https://diver.diveintocode.jp/curriculums/2360]のテキストを参考にしてください。
 require "kosi"
 require_relative "item"
+require_relative "ownable"
 
 # このモジュールをインクルードすると、自身の所有するItemインスタンスを操れるようになります。
 module ItemManager
+  include Ownable
+
   def items # 自身の所有する（自身がオーナーとなっている）全てのItemインスタンスを返します。
     Item.all.select{|item| item.owner == self }
   end
